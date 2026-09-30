@@ -1,0 +1,14 @@
+defaults:
+    - _self_
+    - experiments : BiDiffCkt_Diffckt_multiclass
+    - train : train_default
+    - model : BiDiffCkt
+    - datasets: Diffckt_multiclass
+    # - override hydra/hydra_logging: disabled  #comment when run training
+    # - override hydra/job_logging: disabled  #comment when run training
+hydra:
+  job:
+    chdir: True
+  run:
+    dir: outputs/${experiments.general.project_name}_${experiments.general.experiment_type}_${now:%Y-%m-%d_%H-%M-%S}
+  # output_subdir: null #comment when run training

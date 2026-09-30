@@ -1,0 +1,5 @@
+BiDiffckt:
+  input_dims: {'U': 4, 'V': 4, 'E': 2, 'y': 0}
+  output_dims: {'U': 4, 'V': 4, 'E': 2, 'y': 0}
+  max_num_nodes: {'U': 5, 'V': 9}
+  min_num_nodes: {'U': 1, 'V': 4}

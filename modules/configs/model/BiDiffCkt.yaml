@@ -1,0 +1,11 @@
+conditional: False
+diffusion_noise_schedule: 'cosine'
+T: 500
+GraphTransformer:
+  n_layers: 20
+  hidden_mlp_dims: {'U': 256, 'V': 256, 'E': 128, 'y': 128}
+  hidden_dims: {'dx': 256, 'de': 64, 'dy': 64, 'n_head': 8, 'dim_ffU': 256, 'dim_ffV': 256, 'dim_ffE': 128, 'dim_ffy': 128, 'enable_edge_attn': False} # dx_d = dx_n
+DigressGraphTransformer:
+  n_layers: 20
+  hidden_mlp_dims: {'X': 256, 'U': 256, 'V': 256, 'E': 128, 'y': 128}
+  hidden_dims: {'dx': 256, 'de': 64, 'dy': 64, 'n_head': 8, 'dim_ffX': 256, 'dim_ffU': 256, 'dim_ffV': 256, 'dim_ffE': 128, 'dim_ffy': 128, 'enable_edge_attn': False} # dx_d = dx_n

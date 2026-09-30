@@ -1,0 +1,5 @@
+subckt diff_pair_pmos InP InN OutP OutN Sources VDD
+    parameters W=1u L=1u
+    M1 (OutP InP Sources VDD) pch w=W l=L
+    M2 (OutN InN Sources VDD) pch w=W l=L
+ends diff_pair_pmos

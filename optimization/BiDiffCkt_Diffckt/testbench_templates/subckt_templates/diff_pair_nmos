@@ -1,0 +1,5 @@
+subckt diff_pair_nmos InP InN OutP OutN Sources VSS
+    parameters W=1u L=1u
+    M1 (OutP InP Sources VSS) nch w=W l=L
+    M2 (OutN InN Sources VSS) nch w=W l=L
+ends diff_pair_nmos

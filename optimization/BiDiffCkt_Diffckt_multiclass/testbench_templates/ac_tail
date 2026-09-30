@@ -1,0 +1,5 @@
+// Load and IProbe
+C_Load (Vout 0) capacitor c=1p
+
+//Simulation Setting
+ac ac start=1 stop=1e11 annotate=status

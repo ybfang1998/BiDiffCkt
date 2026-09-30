@@ -1,0 +1,10 @@
+BiDiffckt:
+  input_dims: {'U': 10, 'V': 10, 'E': 21, 'y': 0}
+  output_dims: {'U': 10, 'V': 10, 'E': 21, 'y': 0}
+  max_num_nodes: {'U': 13, 'V': 18}
+  min_num_nodes: {'U': 3, 'V': 8}
+Digress:
+  input_dims: {'X': 10, 'U': 10, 'V': 10, 'E': 21, 'y': 0}
+  output_dims: {'X': 10, 'U': 10, 'V': 10, 'E': 21, 'y': 0}
+  max_num_nodes: {'U': 13, 'V': 18}
+  min_num_nodes: {'U': 3, 'V': 8}

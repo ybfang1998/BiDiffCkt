@@ -1,0 +1,21 @@
+general:
+  project_name: 'BiDiffCkt_OCB101'
+  model_name: 'BiDiffCkt'
+  dataset_name: 'OCB101'
+  wandb: 'offline'
+  experiment_type: 'sample'
+train:
+  batch_size: 256
+  lr: 0.0002
+  weight_decay: 1e-12
+  lambda_train: [1, 1, 5]
+  epochs: 300
+  edge_output_dim: 3
+  edge_loss: 'CE'
+  edge_activation: 'softmax'
+test:
+  n_samples: 1000
+  batch_size: 50
+  num_nodes: "Distributed"
+  model_path: 'outputs/BiDiffCkt_OCB101_train_20260701123141.ckpt'
+  results_path: 'outputs/Sampled_Results/BiDiffCkt_OCB101_generated_1000_results.pkl'

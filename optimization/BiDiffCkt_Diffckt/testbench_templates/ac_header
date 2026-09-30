@@ -1,0 +1,16 @@
+simulator lang = spectre
+global 0
+
+// include the pdk path
+// sample pdk import
+// include "/data/tools/PDKs/TSMC/europractice/extracted/65/CMOS/LP/pdk/cadence_oa/tsmcN65/../models/spectre/toplevel.scs" section=tt_lib
+
+
+parameters VDD_VAL=1.2
+V1 (Vdd 0) vsource dc=VDD_VAL
+Vinp (VIN 0) vsource dc=VDD_VAL/2
+
+V_DM_pos (VINP VIN) vsource dc=0 mag=1
+V_DM_neg (VINN Vout) vsource dc=0 mag=1
+
+// CMOS pins sequence: (D G S B)

@@ -1,0 +1,13 @@
+// Load and IProbe
+C_Load (Vout 0) capacitor c=1p
+Iprobe1 (VINN Vout) iprobe
+
+//Simulation Setting
+stb stb start=1 stop=1e11 log=1000 probe=Iprobe1 localgnd=0 annotate=status
+dcOp dc write="spectre.dc" maxiters=150 maxsteps=10000 annotate=status
+dcOpInfo info what=oppoint where=rawfile
+//XF analysis for PSRR
+xf ( Vout 0 ) xf start=1 stop=1e11 annotate=status
+
+// trans analysis for slew rate
+//tran tran stop=1m errpreset=conservative write="spectre.ic" writefinal="spectre.fc" annotate=status maxiters=5

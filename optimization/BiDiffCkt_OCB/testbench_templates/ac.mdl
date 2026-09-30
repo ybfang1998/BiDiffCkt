@@ -1,0 +1,9 @@
+alias measurement ac {
+ run ac
+ export real gain = db( V(OUT) / V(VIN)) @1
+ //export real ugb = cross(db( V(OUT) / V(VIN) ), 'fall, 1, 0)
+ export real pm = phasemargin(V(OUT))
+ export real gbw = gainBwProd( sig=mag(V(OUT)) )
+}
+
+run ac

@@ -1,0 +1,17 @@
+simulator lang = spectre
+global 0
+
+// include the pdk path
+// sample pdk import
+include "/data/tools/PDKs/TSMC/europractice/extracted/65/CMOS/LP/pdk/cadence_oa/tsmcN65/../models/spectre/toplevel.scs" section=tt_lib
+
+
+parameters VDD_VAL=1.2
+V1 (Vdd 0) vsource dc=VDD_VAL xfmag=1
+// Specify input DC Bias
+Vinp (VINP 0) vsource dc=VDD_VAL/2
+
+//Optional: input DC Bias with trans analysis
+//Vinp (VINP 0) vsource dc=VDD_VAL/2 type=pulse val0=0 val1=1.2 period=40u rise=1n fall=1n width=20u
+
+// CMOS pins sequence: (D G S B)

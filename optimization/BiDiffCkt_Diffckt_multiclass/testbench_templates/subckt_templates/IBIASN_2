@@ -1,0 +1,2 @@
+IBIASNN_I_ref (Vdd IBIASNN) isource dc=5uA
+IBIASNN_M_bias (IBIASNN IBIASNN 0 0) nch w=1u l=1u
