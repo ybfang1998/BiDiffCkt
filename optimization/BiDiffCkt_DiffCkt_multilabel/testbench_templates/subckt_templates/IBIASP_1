@@ -1,0 +1,2 @@
+IBIASP_I_ref (IBIASP 0) isource dc=1uA
+IBIASP_M_bias (IBIASP IBIASP Vdd Vdd) pch w=1u l=1u

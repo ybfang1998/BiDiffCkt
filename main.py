@@ -33,11 +33,15 @@ def main(cfg: DictConfig):
     if dataset_name == "OCB101":
         n_U_max = 6
         n_V_max = 4
-
         data_path = "datasets/OCB/ckt_bench_101.pkl"
         data_path = os.path.join(root_dir, data_path)
+        if not os.path.exists(data_path):
+            utils.dataset_download("ckt_bench_101.pkl", root_dir / "datasets" / "OCB")
+
         specification_path = "datasets/OCB/perform101_reform.csv"
         specification_path = os.path.join(root_dir, specification_path)
+        if not os.path.exists(specification_path):
+            utils.dataset_download("perform101_reform.csv", root_dir / "datasets" / "OCB")
 
         # Read the dataset and clean Invalid Circuit
         with open(data_path, 'rb') as f:
@@ -48,50 +52,33 @@ def main(cfg: DictConfig):
         # min-max scaling for spec(gain, pm, bw)
         spec_scaled = spec_scaling(spec)
     elif dataset_name == "Diffckt":
-        if experiment_type == "train" or experiment_type == "sample":
-            data_path = "datasets/DiffCkt/Diffckt_in_Bipartite.pkl"
-        elif experiment_type == "dummy_test":
-            use_debug_data = cfg.experiments.dummy_test.get(
-                "use_debug_data", False
-            )
-            data_path = (
-                "datasets/DiffCkt/Diffckt_in_Bipartite_debug.pkl"
-                if use_debug_data
-                else "datasets/DiffCkt/Diffckt_in_Bipartite.pkl"
-            )
-        elif experiment_type == "debug":
-            data_path = "datasets/DiffCkt/Diffckt_in_Bipartite_debug.pkl"
+        data_path = "datasets/DiffCkt/Diffckt_in_Bipartite.pkl"
         data_path = os.path.join(root_dir, data_path)
-        if experiment_type == "dummy_test":
-            print(f"[Probe data] Loading dataset: {data_path}", flush=True)
+        if not os.path.exists(data_path):
+            utils.dataset_download("Diffckt_in_Bipartite.pkl", root_dir / "datasets" / "DiffCkt")
+
+        print(f"Loading dataset: {data_path}", flush=True)
         # Read the dataset and clean Invalid Circuit
         with open(data_path, 'rb') as f:
             G = pickle.load(f)
-        if experiment_type == "dummy_test":
-            print(f"[Probe data] Loaded {len(G):,} circuits.", flush=True)
+        print(f"Loaded {len(G):,} circuits.", flush=True)
     elif dataset_name == "Diffckt_multiclass":
-        if experiment_type == "train" or experiment_type == "sample":
-            data_path = "datasets/DiffCkt/Diffckt_in_Bipartite_multiclass.pkl"
-            # #debug
-            # data_path = "datasets/DiffCkt/Diffckt_in_Bipartite_debug.pkl"
-        elif experiment_type == "debug":
-            data_path = "datasets/DiffCkt/Diffckt_in_Bipartite_multiclass_debug.pkl"
-        elif experiment_type == "dummy_test":
-            use_debug_data = cfg.experiments.dummy_test.get(
-                "use_debug_data", False
-            )
-            data_path = (
-                "datasets/DiffCkt/Diffckt_in_Bipartite_multiclass_debug.pkl"
-                if use_debug_data
-                else "datasets/DiffCkt/Diffckt_in_Bipartite_multiclass.pkl"
-            )
+        data_path = "datasets/DiffCkt/Diffckt_in_Bipartite_multiclass.pkl"
         data_path = os.path.join(root_dir, data_path)
+        if not os.path.exists(data_path):
+            utils.dataset_download("Diffckt_in_Bipartite_multiclass.pkl", root_dir / "datasets" / "DiffCkt")
+
         # Read the dataset and clean Invalid Circuit
+        print(f"Loading dataset: {data_path}", flush=True)
         with open(data_path, 'rb') as f:
             G = pickle.load(f)
+        print(f"Loaded {len(G):,} circuits.", flush=True)
     elif dataset_name == "LaMAGIC":
         data_path = "datasets/LaMAGIC/LaMAGIC_345comp_bipartite_graph.pkl"
         data_path = os.path.join(root_dir, data_path)
+        if not os.path.exists(data_path):
+            utils.dataset_download("LaMAGIC_345comp_bipartite_graph.pkl", root_dir / "datasets" / "LaMAGIC")
+
         with open(data_path, 'rb') as f:
             data = pickle.load(f)
     else:
@@ -176,8 +163,6 @@ def main(cfg: DictConfig):
         marginal_V = to_tf_device(torch.from_numpy(dataset.marginal_V_type), None)
         marginal_X = [marginal_U, marginal_V]
         marginal_E = to_tf_device(torch.from_numpy(dataset.marginal_E_type), None)
-        if experiment_type == "debug":
-            marginal_E = to_tf_device(torch.ones(21) / 21, None)
         if experiment_type == "dummy_test":
             train_dataset, test_dataset = random_split(dataset, [0.9, 0.1], generator=data_generator)
             train_loader = DataLoader(train_dataset, batch_size=cfg.experiments.dummy_test.batch_size, shuffle=True,

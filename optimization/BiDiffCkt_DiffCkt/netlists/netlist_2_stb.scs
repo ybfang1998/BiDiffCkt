@@ -1,0 +1,80 @@
+simulator lang = spectre
+global 0
+
+// include the pdk path
+// sample pdk import
+include "/data/tools/PDKs/TSMC/europractice/extracted/65/CMOS/LP/pdk/cadence_oa/tsmcN65/../models/spectre/toplevel.scs" section=tt_lib
+
+
+parameters VDD_VAL=1.2
+V1 (Vdd 0) vsource dc=VDD_VAL xfmag=1
+// Specify input DC Bias
+Vinp (VINP 0) vsource dc=VDD_VAL/2
+
+//Optional: input DC Bias with trans analysis
+//Vinp (VINP 0) vsource dc=VDD_VAL/2 type=pulse val0=0 val1=1.2 period=40u rise=1n fall=1n width=20u
+
+// CMOS pins sequence: (D G S B)
+
+IBIASP_I_ref (IBIASP 0) isource dc=1uA
+IBIASP_M_bias (IBIASP IBIASP Vdd Vdd) pch w=1u l=1u
+
+IBIASN_I_ref (Vdd IBIASN) isource dc=1uA
+IBIASN_M_bias (IBIASN IBIASN 0 0) nch w=1u l=1u
+
+IBIASPP_I_ref (IBIASPP 0) isource dc=5uA
+IBIASPP_M_bias (IBIASPP IBIASPP Vdd Vdd) pch w=1u l=1u
+
+IBIASNN_I_ref (Vdd IBIASNN) isource dc=5uA
+IBIASNN_M_bias (IBIASNN IBIASNN 0 0) nch w=1u l=1u
+
+subckt diff_pair_nmos_1 InP InN OutP OutN Sources VSS
+    parameters W=1u L=1u
+    M1 (OutP InP Sources VSS) nch w=W l=L
+    M2 (OutN InN Sources VSS) nch w=W l=L
+ends diff_pair_nmos_1
+
+subckt bias_pair_nmos_1 Bias Out1 Out2 Out3 Out4 VSS
+    parameters W=1u L=1u
+    M1 (Out1 Bias Out3 VSS) nch w=W l=L
+    M2 (Out2 Bias Out4 VSS) nch w=W l=L
+ends bias_pair_nmos_1
+
+subckt bias_pair_pmos_1 Bias Out1 Out2 Out3 Out4 VDD
+    parameters W=1u L=1u
+    M1 (Out1 Bias Out3 VDD) pch w=W l=L
+    M2 (Out2 Bias Out4 VDD) pch w=W l=L
+ends bias_pair_pmos_1
+
+subckt bias_pair_pmos_2 Bias Out1 Out2 Out3 Out4 VDD
+    parameters W=1u L=1u
+    M1 (Out1 Bias Out3 VDD) pch w=W l=L
+    M2 (Out2 Bias Out4 VDD) pch w=W l=L
+ends bias_pair_pmos_2
+
+subckt bias_pair_nmos_2 Bias Out1 Out2 Out3 Out4 VSS
+    parameters W=1u L=1u
+    M1 (Out1 Bias Out3 VSS) nch w=W l=L
+    M2 (Out2 Bias Out4 VSS) nch w=W l=L
+ends bias_pair_nmos_2
+
+I0 (VINP VINN net3 net1 net5 0) diff_pair_nmos_1 W=1 L=1
+I1 (net5 IBIASN 0 0) nch w=1 l=1
+I2 (IBIASNN net6 Vout net4 net2 0) bias_pair_nmos_1 W=1 L=1
+I3 (IBIASPP net6 Vout net3 net1 Vdd) bias_pair_pmos_1 W=1 L=1
+I4 (IBIASP net3 net1 Vdd Vdd Vdd) bias_pair_pmos_2 W=1 L=1
+I5 (net6 net4 net2 0 0 0) bias_pair_nmos_2 W=1 L=1
+
+// Load and IProbe
+C_Load (Vout 0) capacitor c=1e-12
+Iprobe1 (VINN Vout) iprobe
+
+//Simulation Setting
+stb stb start=1 stop=1e11 log=1000 probe=Iprobe1 localgnd=0 annotate=status
+dcOp dc write="spectre.dc" maxiters=150 maxsteps=10000 annotate=status
+dcOpInfo info what=oppoint where=rawfile
+//XF analysis for PSRR
+xf ( Vout 0 ) xf start=1 stop=1e11 annotate=status
+
+// trans analysis for slew rate
+//tran tran stop=1m errpreset=conservative write="spectre.ic" writefinal="spectre.fc" annotate=status maxiters=5

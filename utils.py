@@ -5,6 +5,8 @@ import wandb
 import omegaconf
 import time
 import subprocess
+from huggingface_hub import hf_hub_download
+from tqdm import tqdm
 
 def set_seed(seed=0):
     if seed is None:
@@ -231,3 +233,13 @@ def get_best_gpu():
     except Exception as e:
         print(f"no GPU found, using CPU. Error: {e}")
         return 0
+
+def dataset_download(dataset_name, local_dir):
+    file_path = hf_hub_download(
+    repo_id="ybfang1998/BiDiffCkt-Dataset",
+    repo_type="dataset",
+    filename=dataset_name,
+    local_dir=local_dir
+    )
+    print(file_path, "installed successfully")
+    

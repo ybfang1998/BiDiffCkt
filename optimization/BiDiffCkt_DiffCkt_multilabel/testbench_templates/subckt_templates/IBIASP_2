@@ -1,0 +1,2 @@
+IBIASPP_I_ref (IBIASPP 0) isource dc=5uA
+IBIASPP_M_bias (IBIASPP IBIASPP Vdd Vdd) pch w=1u l=1u

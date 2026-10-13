@@ -1,0 +1,13 @@
+alias measurement stb {
+ //export real dcgain, gbw
+ run stb
+ export real gbw = gainBwProd( sig=mag(stb:loopGain) )
+ //export real bwOut = bw( sig=mag(stb:loopGain), db=-3 )
+ //gbw=mag(stb:loopGain)@1 * bwOut
+}
+
+run stb
+run dcOp
+run dcOpInfo
+run xf
+

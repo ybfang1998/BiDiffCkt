@@ -1,0 +1,44 @@
+simulator lang=spectre
+global 0
+
+subckt ts_r_p_neg_1 GND IN OUT 
+    R1 (IN OUT) resistor r=0.7096162330693403M 
+    G0 (OUT GND IN GND) vccs gm=-0.19071802679736996m 
+    R0 (OUT GND) resistor r=0.30411388463882655M 
+    C0 (IN GND) capacitor c=0.15184556273675953p 
+ends ts_r_p_neg_1 
+subckt tc_stage_1 GND IN OUT 
+    G0 (OUT GND IN GND) vccs gm=0.41120937961949294m 
+    R0 (OUT GND) resistor r=0.09727404573556532M 
+    C0 (IN GND) capacitor c=0.3273960028817619p 
+ends tc_stage_1 
+subckt ts_r_c_s_1 GND IN OUT 
+    C1 (net1 OUT) capacitor c=3.516248526279595p 
+    R1 (IN net1) resistor r=0.9442673300244436M 
+    G0 (OUT GND IN GND) vccs gm=0.984632001518877m 
+    R0 (OUT GND) resistor r=0.05281160872263512M 
+    C0 (IN GND) capacitor c=0.7839426763685325p 
+ends ts_r_c_s_1 
+subckt ts_c_p_neg_1 GND IN OUT 
+    C1 (IN OUT) capacitor c=8.883507984568762p 
+    G0 (OUT GND IN GND) vccs gm=-0.8422792560892314m 
+    R0 (OUT GND) resistor r=0.06173724406017082M 
+    C0 (IN GND) capacitor c=0.6706045032557574p 
+ends ts_c_p_neg_1 
+subckt tc_stage_neg_1 GND IN OUT 
+    G0 (OUT GND IN GND) vccs gm=-0.11358034935928875m 
+    R0 (OUT GND) resistor r=0.41380397458828805M 
+    C0 (IN GND) capacitor c=0.09043021445803243p 
+ends tc_stage_neg_1 
+
+I0 (0 net1 OUT) ts_r_p_neg_1
+I1 (0 VIN net2) tc_stage_1
+I2 (0 OUT net1) ts_r_c_s_1
+I3 (0 net1 OUT) ts_c_p_neg_1
+I4 (0 net2 net1) tc_stage_neg_1
+V0 (VIN 0) vsource dc=0 mag=1m type=sine ampl=1m freq=1K 
+
+C_L (OUT 0) capacitor c=10p  
+R_L (OUT 0) resistor r=10M  
+
+ac ac start=1 stop=1e9 dec=100 annotate=status 

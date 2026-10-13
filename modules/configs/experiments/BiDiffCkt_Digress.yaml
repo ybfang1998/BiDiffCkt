@@ -1,0 +1,22 @@
+general:
+  project_name: 'BiDiffckt_Digress'
+  model_name: 'BiDiffCkt'
+  dataset_name: 'Diffckt_multiclass'
+  wandb: 'offline'
+  experiment_type: 'train'
+  transformer_type: 'digress'
+train:
+  batch_size: 512
+  lr: 0.0002
+  weight_decay: 1e-12
+  lambda_train: [1, 2, 4]
+  epochs: 150
+  edge_output_dim: 21
+  edge_loss: 'CE'
+  edge_activation: 'softmax'
+test:
+  n_samples: 100
+  batch_size: 50
+  num_nodes: "Distributed"
+  model_path: 'checkpoints/BiDiffckt_Digress.ckpt'
+  results_path: 'outputs/BiDiffckt_Digress_generated_results.pkl'

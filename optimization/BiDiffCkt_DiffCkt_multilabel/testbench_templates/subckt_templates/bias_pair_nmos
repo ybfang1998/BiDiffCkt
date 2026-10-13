@@ -1,0 +1,5 @@
+subckt bias_pair_nmos Bias Out1 Out2 Out3 Out4 VSS
+    parameters W=1u L=1u
+    M1 (Out1 Bias Out3 VSS) nch w=W l=L
+    M2 (Out2 Bias Out4 VSS) nch w=W l=L
+ends bias_pair_nmos

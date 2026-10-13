@@ -1,0 +1,5 @@
+subckt bias_pair_pmos Bias Out1 Out2 Out3 Out4 VDD
+    parameters W=1u L=1u
+    M1 (Out1 Bias Out3 VDD) pch w=W l=L
+    M2 (Out2 Bias Out4 VDD) pch w=W l=L
+ends bias_pair_pmos

@@ -1,28 +1,29 @@
 general:
-  project_name: 'BiDiffCkt_Diffckt'
+  project_name: 'BiDiffCkt_DiffCkt'
   model_name: 'BiDiffCkt'
-  dataset_name: 'Diffckt'
+  dataset_name: 'Diffckt_multiclass'
   wandb: 'offline'
-  experiment_type: 'sample'
+  experiment_type: 'train'
 train:
   batch_size: 1024
   lr: 0.0002
   weight_decay: 1e-12
-  lambda_train: [1, 1, 4]
+  lambda_train: [1, 2, 4]
   epochs: 300
-  edge_output_dim: 5
-  edge_loss: 'BCE'
-  edge_activation: 'sigmoid'
+  edge_output_dim: 21
+  edge_loss: 'CE'
+  edge_activation: 'softmax'
 test:
   n_samples: 100
   batch_size: 50
   num_nodes: "Distributed"
-  model_path: 'checkpoints/BiDiffCkt_Diffckt.ckpt'
-  results_path: 'outputs/BiDiffCkt_Diffckt_generated_100_results.pkl'
+  model_path: 'checkpoints/BiDiffCkt_DiffCkt.ckpt'
+  results_path: 'outputs/Sampled_Results/BiDiffCkt_DiffCkt_generated_results.pkl'
+  # results_path: 'outputs/Sampled_Results/time_samples.pkl'
 dummy_test:
   t: 150
   probe_t: [4, 6, 8, 10, 12, 14, 16, 18, 20]
-  model_path: 'checkpoints/BiDiffCkt_Diffckt.ckpt'
+  model_path: 'checkpoints/BiDiffCkt_DiffCkt.ckpt'
   epochs: 100
   batch_size: 8192
   lr: 0.001

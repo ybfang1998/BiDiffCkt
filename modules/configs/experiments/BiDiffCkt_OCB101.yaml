@@ -3,7 +3,7 @@ general:
   model_name: 'BiDiffCkt'
   dataset_name: 'OCB101'
   wandb: 'offline'
-  experiment_type: 'sample'
+  experiment_type: 'train'
 train:
   batch_size: 256
   lr: 0.0002

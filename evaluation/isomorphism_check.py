@@ -209,7 +209,7 @@ def check_uniqueness(graphs: GraphSource) -> float:
     Empty input returns 0.0.
     """
     keys = _canonical_keys(graphs, "generated")
-    return 100.0 * len(set(keys)) / len(keys) if keys else 0.0
+    return len(set(keys)) / len(keys) if keys else 0.0
 
 
 def check_novelty(
@@ -230,4 +230,4 @@ def check_novelty(
     if not generated_keys:
         return 0.0
     novel_count = sum(key not in reference_keys for key in generated_keys)
-    return 100.0 * novel_count / len(generated_keys)
+    return novel_count / len(generated_keys)

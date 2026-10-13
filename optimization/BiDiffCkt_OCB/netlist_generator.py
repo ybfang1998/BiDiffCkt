@@ -3,6 +3,8 @@ import random
 import numpy as np
 from pathlib import Path
 import pickle
+
+CURRENT_DIR = Path(__file__).resolve().parent
 node_to_netlist_mapping = {
     0: 0,
     1: 1,
@@ -300,10 +302,10 @@ def init_attr(g):
 
 if __name__ == "__main__":
     # Netlist Generate with 50 random generated topology
-    generated_circuit_path = "generated_data/BiDiffCkt_OCB101_generated_50_results.pkl"
+    generated_circuit_path = CURRENT_DIR / "generated_data" / "BiDiffCkt_OCB101_generated_50_results.pkl"
     with open(generated_circuit_path, "rb") as f:
         generated_circuits = pickle.load(f)['G']
     for i, g in enumerate(generated_circuits):
         if valid_bidiffckt_OCB(g):
             # netlists init
-            OCB_bipartite_graph_to_netlist(g, i)
+            OCB_bipartite_graph_to_netlist(g, i, output_dir=CURRENT_DIR / "netlists")

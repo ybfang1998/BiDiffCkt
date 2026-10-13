@@ -1,0 +1,5 @@
+subckt current_mirror_nmos In Out Sources VSS
+    parameters W=1u L=1u
+    M1 (In In Sources VSS) nch w=W l=L
+    M2 (Out In Sources VSS) nch w=W l=L
+ends current_mirror_nmos

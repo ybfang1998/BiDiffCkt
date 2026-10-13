@@ -3,7 +3,7 @@ general:
   model_name: 'BiDiffCkt'
   dataset_name: 'LaMAGIC'
   wandb: 'offline'
-  experiment_type: 'sample'
+  experiment_type: 'train'
 train:
   batch_size: 4096
   lr: 0.0002
