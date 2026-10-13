@@ -1,5 +1,4 @@
 # BiDiffCkt
-
 ## Enviroment Setup
 ### Train and Sampe setup
 This setup requires Anaconda. Run the following command below:
@@ -27,6 +26,10 @@ SIMULATOR_PATH = root / "Spice64" / "bin" / "ngspice_con.exe"
 ```
 
 Replace the default path with the actual location of the ngspice executable on your system.
+
+## Dataset
+
+The datasets will be automatically downloaded when running the experiments. Alternatively, you can manually download them from our [BiDiffCkt Dataset repository](https://huggingface.co/datasets/ybfang1998/BiDiffCkt-Dataset) on Hugging Face.
 
 ## How to Run
 
